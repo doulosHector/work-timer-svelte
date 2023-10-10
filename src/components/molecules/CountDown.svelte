@@ -22,6 +22,8 @@
 
 	$: timeLeft = initialTime;
 
+	$: timeElapsed = !isCountingUp ? initialTime - timeLeft : initialTime + timeLeft;
+
 	$: if (timeLeft === 0 && isRunning) {
 		isCountingUp = true;
 		handleInterval();
@@ -59,21 +61,12 @@
 		requestNotifPermission();
 	}
 
-	function handleStopBtn() {
+	function resetTimer(sendTimeElapsed = false) {
 		isRunning = false;
 		isCountingUp = false;
 		handleInterval();
-		const timeElapsed = !isCountingUp ? initialTime - timeLeft : initialTime + timeLeft;
-		dispatch('countDownStopped', timeElapsed);
+		dispatch('countDownStopped', sendTimeElapsed ? timeElapsed : 0);
 		timeLeft = initialTime;
-	}
-
-	function handleSkipBtn() {
-		isRunning = false;
-		isCountingUp = false;
-		timeLeft = initialTime;
-		handleInterval();
-		dispatch('countDownStopped', 0);
 	}
 </script>
 
@@ -99,8 +92,12 @@
 			text="Stop"
 			disabled={!isRunning}
 			disabledMsg="Please start the timer first"
-			on:click={handleStopBtn}
+			on:click={() => resetTimer(true)}
 		/>
-		<Button customClass="bg-amber-800 hover:bg-amber-700" text="Skip" on:click={handleSkipBtn} />
+		<Button
+			customClass="bg-amber-800 hover:bg-amber-700"
+			text="Skip"
+			on:click={() => resetTimer()}
+		/>
 	</div>
 </div>
