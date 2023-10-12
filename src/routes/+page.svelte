@@ -3,6 +3,7 @@
 	import RangeInput from '../components/atoms/RangeInput.svelte';
 	import TargetLeft from '../components/atoms/TargetLeft.svelte';
 	import CountDown from '../components/molecules/CountDown.svelte';
+	import ProgressBar from '../components/atoms/ProgressBar.svelte';
 
 	let targetTime = 0;
 	let workTime = 0;
@@ -64,7 +65,8 @@
 					on:countDownStopped={handleCountDownStopped}
 				/>
 			{/if}
-			<div class="mt-4">
+			<div class="mt-6 space-y-2 text-center w-60">
+				<ProgressBar targetTime={targetTime * 60} timeElapsed={workTimeElapsed} />
 				<TargetLeft targetTime={targetTime * 60} timeElapsed={workTimeElapsed} />
 			</div>
 		</div>
