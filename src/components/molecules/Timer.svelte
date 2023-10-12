@@ -65,7 +65,7 @@
 		isRunning = false;
 		isCountingUp = false;
 		handleInterval();
-		dispatch('countDownStopped', sendTimeElapsed ? timeElapsed : 0);
+		dispatch('timerStopped', sendTimeElapsed ? timeElapsed : 0);
 		timeLeft = initialTime;
 	}
 </script>

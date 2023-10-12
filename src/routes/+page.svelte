@@ -2,14 +2,14 @@
 	import { onMount } from 'svelte';
 	import RangeInput from '../components/atoms/RangeInput.svelte';
 	import TargetLeft from '../components/atoms/TargetLeft.svelte';
-	import CountDown from '../components/molecules/CountDown.svelte';
+	import Timer from '../components/molecules/Timer.svelte';
 	import ProgressBar from '../components/atoms/ProgressBar.svelte';
 
 	let targetTime = 0;
 	let workTime = 0;
 	let restTime = 0;
 	let workTimeElapsed = 0;
-	let showWorkCountDown = true;
+	let showWorkTimer = true;
 	let initialValues;
 	let ls;
 
@@ -36,10 +36,12 @@
 		}
 	}
 
-	function handleCountDownStopped(event) {
-		const timeElapsed = event.detail;
-		showWorkCountDown = !showWorkCountDown;
-		workTimeElapsed += timeElapsed;
+	function handleTimerStopped(event) {
+		if (showWorkTimer) {
+			const timeElapsed = event.detail;
+			workTimeElapsed += timeElapsed;
+		}
+		showWorkTimer = !showWorkTimer;
 	}
 </script>
 
@@ -50,19 +52,19 @@
 			<RangeInput name="Target Time" bind:inputTime={targetTime} maxTime={480} step={10} />
 			<RangeInput name="Work Lap Time" bind:inputTime={workTime} maxTime={120} step={10} />
 			<RangeInput name="Rest Lap Time" bind:inputTime={restTime} maxTime={30} step={1} />
-			{#if showWorkCountDown}
-				<CountDown
+			{#if showWorkTimer}
+				<Timer
 					name="Work Timer"
 					initialTime={workTime * 60}
 					backgroundColor="bg-green-700"
-					on:countDownStopped={handleCountDownStopped}
+					on:timerStopped={handleTimerStopped}
 				/>
 			{:else}
-				<CountDown
+				<Timer
 					name="Rest Timer"
 					initialTime={restTime * 60}
 					backgroundColor="bg-sky-700"
-					on:countDownStopped={handleCountDownStopped}
+					on:timerStopped={handleTimerStopped}
 				/>
 			{/if}
 			<div class="mt-6 space-y-2 text-center w-60">
