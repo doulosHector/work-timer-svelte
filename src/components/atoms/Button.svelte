@@ -1,6 +1,6 @@
 <script>
 	export let customClass = '';
-	export let disabled = '';
+	export let disabled = false;
 	export let disabledMsg = '';
 	export let text = '';
 </script>
