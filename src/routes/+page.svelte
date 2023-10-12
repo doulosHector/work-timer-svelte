@@ -1,4 +1,5 @@
 <script>
+	import { onMount } from 'svelte';
 	import RangeInput from '../components/atoms/RangeInput.svelte';
 	import TargetLeft from '../components/atoms/TargetLeft.svelte';
 	import CountDown from '../components/molecules/CountDown.svelte';
@@ -8,6 +9,31 @@
 	let restTime = 0;
 	let workTimeElapsed = 0;
 	let showWorkCountDown = true;
+	let initialValues;
+	let ls;
+
+	onMount(() => {
+		if (typeof localStorage !== 'undefined') {
+			ls = localStorage;
+			initialValues = JSON.parse(localStorage.getItem('initialValues'));
+			if (initialValues) {
+				targetTime = initialValues.targetTime;
+				workTime = initialValues.workTime;
+				restTime = initialValues.restTime;
+			}
+		}
+	});
+
+	$: {
+		if (ls) {
+			initialValues = {
+				targetTime,
+				workTime,
+				restTime
+			};
+			localStorage.setItem('initialValues', JSON.stringify(initialValues));
+		}
+	}
 
 	function handleCountDownStopped(event) {
 		const timeElapsed = event.detail;
@@ -20,7 +46,7 @@
 	<div class="container mx-auto py-8">
 		<h1 class="text-3xl text-center font-bold">Work Timer</h1>
 		<div class="flex flex-col items-center">
-			<RangeInput name="Target Time" bind:inputTime={targetTime} maxTime={400} step={10} />
+			<RangeInput name="Target Time" bind:inputTime={targetTime} maxTime={480} step={10} />
 			<RangeInput name="Work Lap Time" bind:inputTime={workTime} maxTime={120} step={10} />
 			<RangeInput name="Rest Lap Time" bind:inputTime={restTime} maxTime={30} step={1} />
 			{#if showWorkCountDown}
