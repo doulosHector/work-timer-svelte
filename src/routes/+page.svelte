@@ -1,5 +1,6 @@
 <script>
 	import RangeInput from '../components/atoms/RangeInput.svelte';
+	import TargetLeft from '../components/atoms/TargetLeft.svelte';
 	import CountDown from '../components/molecules/CountDown.svelte';
 
 	let targetTime = 0;
@@ -37,6 +38,9 @@
 					on:countDownStopped={handleCountDownStopped}
 				/>
 			{/if}
+			<div class="mt-4">
+				<TargetLeft targetTime={targetTime * 60} timeElapsed={workTimeElapsed} />
+			</div>
 		</div>
 	</div>
 </main>
