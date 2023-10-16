@@ -1,5 +1,16 @@
 # Work Timer
 
+Work Timer is a simple timer web app for tracking work time of the day and notify when is time to take a break.
+
+## Features
+
+- Simple and easy to use
+- Track work, break and overtime
+- Notify when work time or break time is over
+- Track total work time of the day
+- Set target and show progress percentage
+- Show target left time
+
 ## Development
 
 Install dependencies:
