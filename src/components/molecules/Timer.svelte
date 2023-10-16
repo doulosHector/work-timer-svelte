@@ -28,7 +28,7 @@
 		isCountingUp = true;
 		handleInterval();
 		if (notifGranted) {
-			new Notification('Time is ended!');
+			new Notification(`${name} finished!`);
 		}
 	}
 
