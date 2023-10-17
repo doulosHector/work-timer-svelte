@@ -9,8 +9,6 @@
 
 	const dispatch = createEventDispatcher();
 
-	const favicon = document.getElementById('favicon');
-
 	let notifGranted = false;
 	let isRunning = false;
 	let isCountingUp = false;
@@ -28,7 +26,6 @@
 
 	$: if (timeLeft === 0 && isRunning) {
 		isCountingUp = true;
-		favicon.href = '/time_orange.png';
 		handleInterval();
 		if (notifGranted) {
 			new Notification(`${name} finished!`);
@@ -72,6 +69,12 @@
 		timeLeft = initialTime;
 	}
 </script>
+
+<svelte:head>
+	{#if isCountingUp}
+		<link rel="icon" href="/time_orange.png" />
+	{/if}
+</svelte:head>
 
 <div class="flex flex-col items-center mt-4">
 	<p class="text-gray-400">{name}</p>

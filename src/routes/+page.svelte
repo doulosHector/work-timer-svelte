@@ -5,8 +5,6 @@
 	import Timer from '../components/molecules/Timer.svelte';
 	import ProgressBar from '../components/atoms/ProgressBar.svelte';
 
-	const favicon = document.getElementById('favicon');
-
 	let targetTime = 0;
 	let workTime = 0;
 	let restTime = 0;
@@ -44,9 +42,16 @@
 			workTimeElapsed += timeElapsed;
 		}
 		showWorkTimer = !showWorkTimer;
-		favicon.href = showWorkTimer ? '/time_green.png' : '/time_blue.png';
 	}
 </script>
+
+<svelte:head>
+	{#if showWorkTimer}
+		<link rel="icon" href="/time_green.png" />
+	{:else}
+		<link rel="icon" href="/time_blue.png" />
+	{/if}
+</svelte:head>
 
 <main class="flex min-h-screen flex-col items-center justify-between p-12 lg:p-24">
 	<div class="container mx-auto py-8">
