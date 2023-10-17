@@ -5,6 +5,8 @@
 	import Timer from '../components/molecules/Timer.svelte';
 	import ProgressBar from '../components/atoms/ProgressBar.svelte';
 
+	const favicon = document.getElementById('favicon');
+
 	let targetTime = 0;
 	let workTime = 0;
 	let restTime = 0;
@@ -42,6 +44,7 @@
 			workTimeElapsed += timeElapsed;
 		}
 		showWorkTimer = !showWorkTimer;
+		favicon.href = showWorkTimer ? '/time_green.png' : '/time_blue.png';
 	}
 </script>
 
