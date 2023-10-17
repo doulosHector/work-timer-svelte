@@ -7,7 +7,7 @@
 
 	let targetTime = 0;
 	let workTime = 0;
-	let restTime = 0;
+	let breakTime = 0;
 	let workTimeElapsed = 0;
 	let showWorkTimer = true;
 	let initialValues;
@@ -20,7 +20,7 @@
 			if (initialValues) {
 				targetTime = initialValues.targetTime;
 				workTime = initialValues.workTime;
-				restTime = initialValues.restTime;
+				breakTime = initialValues.breakTime;
 			}
 		}
 	});
@@ -30,7 +30,7 @@
 			initialValues = {
 				targetTime,
 				workTime,
-				restTime
+				breakTime
 			};
 			localStorage.setItem('initialValues', JSON.stringify(initialValues));
 		}
@@ -59,7 +59,7 @@
 		<div class="flex flex-col items-center">
 			<RangeInput name="Target Time" bind:inputTime={targetTime} maxTime={480} step={10} />
 			<RangeInput name="Work Lap Time" bind:inputTime={workTime} maxTime={120} step={10} />
-			<RangeInput name="Rest Lap Time" bind:inputTime={restTime} maxTime={30} step={1} />
+			<RangeInput name="Rest Lap Time" bind:inputTime={breakTime} maxTime={30} step={1} />
 			{#if showWorkTimer}
 				<Timer
 					name="Work Timer"
@@ -69,8 +69,8 @@
 				/>
 			{:else}
 				<Timer
-					name="Rest Timer"
-					initialTime={restTime * 60}
+					name="Break Timer"
+					initialTime={breakTime * 60}
 					backgroundColor="bg-sky-700"
 					on:timerStopped={handleTimerStopped}
 				/>
