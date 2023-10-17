@@ -71,6 +71,7 @@
 </script>
 
 <svelte:head>
+	<title>{name} - {formatTimeWithSeconds(timeLeft)}</title>
 	{#if isCountingUp}
 		<link rel="icon" href="/time_orange.png" />
 	{/if}
