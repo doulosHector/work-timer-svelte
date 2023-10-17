@@ -9,6 +9,8 @@
 
 	const dispatch = createEventDispatcher();
 
+	const favicon = document.getElementById('favicon');
+
 	let notifGranted = false;
 	let isRunning = false;
 	let isCountingUp = false;
@@ -26,6 +28,7 @@
 
 	$: if (timeLeft === 0 && isRunning) {
 		isCountingUp = true;
+		favicon.href = '/time_orange.png';
 		handleInterval();
 		if (notifGranted) {
 			new Notification(`${name} finished!`);
