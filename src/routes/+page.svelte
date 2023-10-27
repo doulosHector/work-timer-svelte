@@ -4,6 +4,7 @@
 	import TargetLeft from '../components/atoms/TargetLeft.svelte';
 	import Timer from '../components/molecules/Timer.svelte';
 	import ProgressBar from '../components/atoms/ProgressBar.svelte';
+	import EstimatedEndTime from '../components/atoms/EstimatedEndTime.svelte';
 
 	let targetTime = 0;
 	let workTime = 0;
@@ -77,7 +78,13 @@
 			{/if}
 			<div class="mt-6 space-y-2 text-center w-60">
 				<ProgressBar targetTime={targetTime * 60} timeElapsed={workTimeElapsed} />
-				<TargetLeft targetTime={targetTime * 60} timeElapsed={workTimeElapsed} />
+				<TargetLeft targetTimeInSeconds={targetTime * 60} timeElapsed={workTimeElapsed} />
+				<EstimatedEndTime
+					targetTimeInMinutes={targetTime}
+					timeElapsed={workTimeElapsed}
+					breakTimeInMinutes={breakTime}
+					{workTime}
+				/>
 			</div>
 		</div>
 	</div>
