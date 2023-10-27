@@ -2,9 +2,9 @@
 	import { formatTimeWithSeconds } from '../../helpers/formatTime';
 
 	export let targetTimeInSeconds;
-	export let workTimeElapsed;
+	export let timeElapsedInSeconds;
 
-	$: targetLeftInSeconds = targetTimeInSeconds - workTimeElapsed;
+	$: targetLeftInSeconds = targetTimeInSeconds - timeElapsedInSeconds;
 </script>
 
 <p>

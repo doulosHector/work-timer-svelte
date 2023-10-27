@@ -6,10 +6,10 @@
 	import ProgressBar from '../components/atoms/ProgressBar.svelte';
 	import EstimatedEndTime from '../components/atoms/EstimatedEndTime.svelte';
 
-	let targetTime = 0;
-	let workTime = 0;
-	let breakTime = 0;
-	let workTimeElapsed = 0;
+	let targetTimeInMinutes = 0;
+	let workTimeInMinutes = 0;
+	let breakTimeInMinutes = 0;
+	let workTimeElapsedInSeconds = 0;
 	let showWorkTimer = true;
 	let initialValues;
 	let ls;
@@ -19,9 +19,9 @@
 			ls = localStorage;
 			initialValues = JSON.parse(localStorage.getItem('initialValues'));
 			if (initialValues) {
-				targetTime = initialValues.targetTime;
-				workTime = initialValues.workTime;
-				breakTime = initialValues.breakTime;
+				targetTimeInMinutes = initialValues.targetTimeInMinutes;
+				workTimeInMinutes = initialValues.workTimeInMinutes;
+				breakTimeInMinutes = initialValues.breakTimeInMinutes;
 			}
 		}
 	});
@@ -29,9 +29,9 @@
 	$: {
 		if (ls) {
 			initialValues = {
-				targetTime,
-				workTime,
-				breakTime
+				targetTimeInMinutes,
+				workTimeInMinutes,
+				breakTimeInMinutes
 			};
 			localStorage.setItem('initialValues', JSON.stringify(initialValues));
 		}
@@ -39,8 +39,8 @@
 
 	function handleTimerStopped(event) {
 		if (showWorkTimer) {
-			const timeElapsed = event.detail;
-			workTimeElapsed += timeElapsed;
+			const timeElapsedInSeconds = event.detail;
+			workTimeElapsedInSeconds += timeElapsedInSeconds;
 		}
 		showWorkTimer = !showWorkTimer;
 	}
@@ -58,32 +58,38 @@
 	<div class="container mx-auto py-8">
 		<h1 class="text-3xl text-center font-bold">Work Timer</h1>
 		<div class="flex flex-col items-center">
-			<RangeInput name="Target Time" bind:inputTime={targetTime} maxTime={480} step={10} />
-			<RangeInput name="Work Lap Time" bind:inputTime={workTime} maxTime={120} step={10} />
-			<RangeInput name="Rest Lap Time" bind:inputTime={breakTime} maxTime={30} step={1} />
+			<RangeInput name="Target Time" bind:inputTime={targetTimeInMinutes} maxTime={480} step={10} />
+			<RangeInput name="Work Lap Time" bind:inputTime={workTimeInMinutes} maxTime={120} step={10} />
+			<RangeInput name="Rest Lap Time" bind:inputTime={breakTimeInMinutes} maxTime={30} step={1} />
 			{#if showWorkTimer}
 				<Timer
 					name="Work Timer"
-					initialTime={workTime * 60}
+					initialTimeInSeconds={workTimeInMinutes * 60}
 					backgroundColor="bg-green-700"
 					on:timerStopped={handleTimerStopped}
 				/>
 			{:else}
 				<Timer
 					name="Break Timer"
-					initialTime={breakTime * 60}
+					initialTimeInSeconds={breakTimeInMinutes * 60}
 					backgroundColor="bg-sky-700"
 					on:timerStopped={handleTimerStopped}
 				/>
 			{/if}
 			<div class="mt-6 space-y-2 text-center w-60">
-				<ProgressBar targetTime={targetTime * 60} timeElapsed={workTimeElapsed} />
-				<TargetLeft targetTimeInSeconds={targetTime * 60} timeElapsed={workTimeElapsed} />
+				<ProgressBar
+					targetTimeInSeconds={targetTimeInMinutes * 60}
+					timeElapsedInSeconds={workTimeElapsedInSeconds}
+				/>
+				<TargetLeft
+					targetTimeInSeconds={targetTimeInMinutes * 60}
+					timeElapsedInSeconds={workTimeElapsedInSeconds}
+				/>
 				<EstimatedEndTime
-					targetTimeInMinutes={targetTime}
-					timeElapsed={workTimeElapsed}
-					breakTimeInMinutes={breakTime}
-					{workTime}
+					{breakTimeInMinutes}
+					{workTimeInMinutes}
+					targetTimeInSeconds={targetTimeInMinutes * 60}
+					timeElapsedInSeconds={workTimeElapsedInSeconds}
 				/>
 			</div>
 		</div>

@@ -1,13 +1,15 @@
 <script>
 	import dayjs from 'dayjs';
 
-	export let targetTimeInMinutes;
-	export let timeElapsed;
+	export let targetTimeInSeconds;
+	export let timeElapsedInSeconds;
 	export let breakTimeInMinutes;
-	export let workTime;
+	export let workTimeInMinutes;
 
-	$: targetLeftInMinutes = targetTimeInMinutes - timeElapsed;
-	$: breaksLeft = Math.floor(targetLeftInMinutes / workTime) - 1 || 0;
+	$: targetLeftInSeconds = targetTimeInSeconds - timeElapsedInSeconds;
+	$: targetLeftInMinutes = Math.floor(targetLeftInSeconds / 60);
+	$: breaksLeft =
+		workTimeInMinutes > 0 ? Math.floor(targetLeftInMinutes / workTimeInMinutes) - 1 : 0;
 	$: breakTimeLeftInMinutes = breaksLeft * breakTimeInMinutes;
 	$: totalTimeLeftInMinutes = targetLeftInMinutes + breakTimeLeftInMinutes;
 	$: estimatedEndTime = dayjs().add(totalTimeLeftInMinutes, 'minute').format('HH:mm:ss');

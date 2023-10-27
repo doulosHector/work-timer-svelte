@@ -4,7 +4,7 @@
 	import Button from '../atoms/Button.svelte';
 
 	export let name;
-	export let initialTime;
+	export let initialTimeInSeconds;
 	export let backgroundColor;
 
 	const dispatch = createEventDispatcher();
@@ -20,11 +20,13 @@
 		}
 	});
 
-	$: timeLeft = initialTime;
+	$: timeLeftInSeconds = initialTimeInSeconds;
 
-	$: timeElapsed = !isCountingUp ? initialTime - timeLeft : initialTime + timeLeft;
+	$: timeElapsedInSeconds = !isCountingUp
+		? initialTimeInSeconds - timeLeftInSeconds
+		: initialTimeInSeconds + timeLeftInSeconds;
 
-	$: if (timeLeft === 0 && isRunning) {
+	$: if (timeLeftInSeconds === 0 && isRunning) {
 		isCountingUp = true;
 		handleInterval();
 		if (notifGranted) {
@@ -45,11 +47,11 @@
 		if (isRunning) {
 			if (isCountingUp) {
 				intervalId = setInterval(() => {
-					timeLeft++;
+					timeLeftInSeconds++;
 				}, 1000);
 			} else {
 				intervalId = setInterval(() => {
-					timeLeft--;
+					timeLeftInSeconds--;
 				}, 1000);
 			}
 		}
@@ -65,13 +67,13 @@
 		isRunning = false;
 		isCountingUp = false;
 		handleInterval();
-		dispatch('timerStopped', sendTimeElapsed ? timeElapsed : 0);
-		timeLeft = initialTime;
+		dispatch('timerStopped', sendTimeElapsed ? timeElapsedInSeconds : 0);
+		timeLeftInSeconds = initialTimeInSeconds;
 	}
 </script>
 
 <svelte:head>
-	<title>{name} - {formatTimeWithSeconds(timeLeft)}</title>
+	<title>{name} - {formatTimeWithSeconds(timeLeftInSeconds)}</title>
 	{#if isCountingUp}
 		<link rel="icon" href="/time_orange.png" />
 	{/if}
@@ -84,13 +86,13 @@
 			isCountingUp ? 'bg-yellow-700' : backgroundColor
 		}`}
 	>
-		<p class="text-2xl text-white font-bold">{formatTimeWithSeconds(timeLeft)}</p>
+		<p class="text-2xl text-white font-bold">{formatTimeWithSeconds(timeLeftInSeconds)}</p>
 	</div>
 	<div class="flex space-x-4 mt-4">
 		<Button
 			customClass="bg-cyan-800 hover:bg-cyan-700"
 			text={isRunning ? 'Pause' : 'Start'}
-			disabled={initialTime === 0}
+			disabled={initialTimeInSeconds === 0}
 			disabledMsg="Please set a time first"
 			on:click={handleStartBtn}
 		/>

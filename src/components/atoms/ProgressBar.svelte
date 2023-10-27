@@ -1,8 +1,9 @@
 <script>
-	export let timeElapsed;
-	export let targetTime;
+	export let targetTimeInSeconds;
+	export let timeElapsedInSeconds;
 
-	$: progress = targetTime > 0 ? Math.floor((timeElapsed * 100) / targetTime) : 0;
+	$: progress =
+		targetTimeInSeconds > 0 ? Math.floor((timeElapsedInSeconds * 100) / targetTimeInSeconds) : 0;
 </script>
 
 <div class="w-full h-4 bg-gray-200 rounded-full overflow-hidden">
