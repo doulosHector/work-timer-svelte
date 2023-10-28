@@ -60,7 +60,7 @@
 		<div class="flex flex-col items-center">
 			<RangeInput name="Target Time" bind:inputTime={targetTimeInMinutes} maxTime={480} step={10} />
 			<RangeInput name="Work Lap Time" bind:inputTime={workTimeInMinutes} maxTime={120} step={10} />
-			<RangeInput name="Rest Lap Time" bind:inputTime={breakTimeInMinutes} maxTime={30} step={1} />
+			<RangeInput name="Break Lap Time" bind:inputTime={breakTimeInMinutes} maxTime={30} step={1} />
 			{#if showWorkTimer}
 				<Timer
 					name="Work Timer"
