@@ -10,6 +10,7 @@ Work Timer is a simple timer web app for tracking work time of the day and notif
 - Track total work time of the day
 - Set target and show progress percentage
 - Show target left time
+- Show estimated end time
 
 ## Development
 
