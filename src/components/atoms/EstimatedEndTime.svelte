@@ -2,19 +2,28 @@
 	import dayjs from 'dayjs';
 
 	export let targetTimeInSeconds;
-	export let timeElapsedInSeconds;
+	export let workTimeElapsedInSeconds;
+	export let breakTimeElapsedInSeconds;
 	export let breakTimeInMinutes;
 	export let workTimeInMinutes;
 
 	let addFoodHour = false;
+	let estimatedEndTime = 0;
 
 	$: foodHour = addFoodHour ? 60 : 0;
-	$: targetLeftInSeconds = targetTimeInSeconds - timeElapsedInSeconds;
+	$: targetLeftInSeconds = targetTimeInSeconds - workTimeElapsedInSeconds;
 	$: targetLeftInMinutes = targetLeftInSeconds > 0 ? targetLeftInSeconds / 60 : 0;
 	$: breaksLeft = workTimeInMinutes > 0 ? Math.floor(targetLeftInMinutes / workTimeInMinutes) : 0;
 	$: breakTimeLeftInMinutes = breaksLeft * breakTimeInMinutes;
 	$: totalTimeLeftInMinutes = Math.floor(targetLeftInMinutes + breakTimeLeftInMinutes) + foodHour;
-	$: estimatedEndTime = dayjs().add(totalTimeLeftInMinutes, 'minute').format('hh:mm a');
+	$: {
+		// This reasign estimatedEndTime when totalTimeLeftInMinutes
+		// or breakTimeElapsedInSeconds changes to have the most accurate
+		// estimatedEndTime
+		if (totalTimeLeftInMinutes || breakTimeElapsedInSeconds) {
+			estimatedEndTime = dayjs().add(totalTimeLeftInMinutes, 'minute').format('hh:mm a');
+		}
+	}
 </script>
 
 <p>Est. end time: {estimatedEndTime}</p>

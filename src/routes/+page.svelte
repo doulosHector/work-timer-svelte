@@ -10,6 +10,7 @@
 	let workTimeInMinutes = 0;
 	let breakTimeInMinutes = 0;
 	let workTimeElapsedInSeconds = 0;
+	let breakTimeElapsedInSeconds = 0;
 	let showWorkTimer = true;
 	let initialValues;
 	let ls;
@@ -38,9 +39,11 @@
 	}
 
 	function handleTimerStopped(event) {
+		const timeElapsedInSeconds = event.detail;
 		if (showWorkTimer) {
-			const timeElapsedInSeconds = event.detail;
 			workTimeElapsedInSeconds += timeElapsedInSeconds;
+		} else {
+			breakTimeElapsedInSeconds += timeElapsedInSeconds;
 		}
 		showWorkTimer = !showWorkTimer;
 	}
@@ -59,7 +62,7 @@
 		<h1 class="text-3xl text-center font-bold">Work Timer</h1>
 		<div class="flex flex-col items-center">
 			<RangeInput name="Target Time" bind:inputTime={targetTimeInMinutes} maxTime={480} step={10} />
-			<RangeInput name="Work Lap Time" bind:inputTime={workTimeInMinutes} maxTime={120} step={10} />
+			<RangeInput name="Work Lap Time" bind:inputTime={workTimeInMinutes} maxTime={120} step={5} />
 			<RangeInput name="Break Lap Time" bind:inputTime={breakTimeInMinutes} maxTime={30} step={1} />
 			{#if showWorkTimer}
 				<Timer
@@ -88,8 +91,9 @@
 				<EstimatedEndTime
 					{breakTimeInMinutes}
 					{workTimeInMinutes}
+					{workTimeElapsedInSeconds}
+					{breakTimeElapsedInSeconds}
 					targetTimeInSeconds={targetTimeInMinutes * 60}
-					timeElapsedInSeconds={workTimeElapsedInSeconds}
 				/>
 			</div>
 		</div>
