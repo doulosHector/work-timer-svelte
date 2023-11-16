@@ -6,6 +6,7 @@
 	export let name;
 	export let initialTimeInSeconds;
 	export let backgroundColor;
+	export let iconUrl;
 
 	const dispatch = createEventDispatcher();
 
@@ -30,7 +31,7 @@
 		isCountingUp = true;
 		handleInterval();
 		if (notifGranted) {
-			new Notification(`${name} finished!`);
+			new Notification(`${name} finished!`, { icon: iconUrl });
 		}
 	}
 
@@ -83,7 +84,7 @@
 	<p class="text-gray-400">{name}</p>
 	<div
 		class={`p-4 mt-2 rounded-lg inline-block w-36 text-center ${
-			isCountingUp ? 'bg-yellow-700' : backgroundColor
+			isCountingUp ? 'bg-yellow-600' : backgroundColor
 		}`}
 	>
 		<p class="text-2xl text-white font-bold">{formatTimeWithSeconds(timeLeftInSeconds)}</p>

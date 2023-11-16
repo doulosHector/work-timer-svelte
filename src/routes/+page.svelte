@@ -38,6 +38,8 @@
 		}
 	}
 
+	$: iconUrl = showWorkTimer ? '/time_green.png' : '/time_blue.png';
+
 	function handleTimerStopped(event) {
 		const timeElapsedInSeconds = event.detail;
 		if (showWorkTimer) {
@@ -50,11 +52,7 @@
 </script>
 
 <svelte:head>
-	{#if showWorkTimer}
-		<link rel="icon" href="/time_green.png" />
-	{:else}
-		<link rel="icon" href="/time_blue.png" />
-	{/if}
+	<link rel="icon" href={iconUrl} />
 </svelte:head>
 
 <main class="flex min-h-screen flex-col items-center justify-between p-12 lg:p-24">
@@ -69,6 +67,7 @@
 					name="Work Timer"
 					initialTimeInSeconds={workTimeInMinutes * 60}
 					backgroundColor="bg-green-700"
+					iconUrl="/time_green.png"
 					on:timerStopped={handleTimerStopped}
 				/>
 			{:else}
@@ -76,6 +75,7 @@
 					name="Break Timer"
 					initialTimeInSeconds={breakTimeInMinutes * 60}
 					backgroundColor="bg-sky-700"
+					iconUrl="/time_blue.png"
 					on:timerStopped={handleTimerStopped}
 				/>
 			{/if}
