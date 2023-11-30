@@ -14,7 +14,7 @@
 	$: targetLeftInSeconds = targetTimeInSeconds - workTimeElapsedInSeconds;
 	$: targetLeftInMinutes = targetLeftInSeconds > 0 ? targetLeftInSeconds / 60 : 0;
 
-	$: breaksLeft = workTimeInMinutes > 0 ? Math.ceil(targetLeftInMinutes / workTimeInMinutes) : 0;
+	$: breaksLeft = workTimeInMinutes > 0 ? Math.floor(targetLeftInMinutes / workTimeInMinutes) : 0;
 	$: breakTimeLeftInMinutes = breaksLeft * breakTimeInMinutes;
 
 	$: totalTimeLeftInMinutes = Math.floor(targetLeftInMinutes + breakTimeLeftInMinutes + foodHour);
