@@ -14,11 +14,10 @@
 	$: targetLeftInSeconds = targetTimeInSeconds - workTimeElapsedInSeconds;
 	$: targetLeftInMinutes = targetLeftInSeconds > 0 ? targetLeftInSeconds / 60 : 0;
 
-	$: breaksLeft =
-		workTimeInMinutes > 0 ? Math.floor(targetLeftInMinutes / workTimeInMinutes) - 1 : 0;
+	$: breaksLeft = workTimeInMinutes > 0 ? Math.round(targetLeftInMinutes / workTimeInMinutes) : 0;
 	$: breakTimeLeftInMinutes = breaksLeft * breakTimeInMinutes;
 
-	$: totalTimeLeftInMinutes = Math.floor(targetLeftInMinutes + breakTimeLeftInMinutes + foodHour);
+	$: totalTimeLeftInMinutes = Math.round(targetLeftInMinutes + breakTimeLeftInMinutes + foodHour);
 
 	$: {
 		// This reasign estimatedEndTime when totalTimeLeftInMinutes
