@@ -11,7 +11,7 @@
 	let breakTimeInMinutes = 0;
 	let workTimeElapsedInSeconds = 0;
 	let breakTimeElapsedInSeconds = 0;
-	let showWorkTimer = true;
+	let currentTimer = 'work';
 	let initialValues;
 	let ls;
 
@@ -38,16 +38,16 @@
 		}
 	}
 
-	$: iconUrl = showWorkTimer ? '/time_green.png' : '/time_blue.png';
+	$: iconUrl = currentTimer === 'work' ? '/time_green.png' : '/time_blue.png';
 
 	function handleTimerStopped(event) {
 		const timeElapsedInSeconds = event.detail;
-		if (showWorkTimer) {
+		if (currentTimer === 'work') {
 			workTimeElapsedInSeconds += timeElapsedInSeconds;
 		} else {
 			breakTimeElapsedInSeconds += timeElapsedInSeconds;
 		}
-		showWorkTimer = !showWorkTimer;
+		currentTimer = currentTimer === 'work' ? 'break' : 'work';
 	}
 </script>
 
@@ -62,7 +62,7 @@
 			<RangeInput name="Target Time" bind:inputTime={targetTimeInMinutes} maxTime={480} step={10} />
 			<RangeInput name="Work Lap Time" bind:inputTime={workTimeInMinutes} maxTime={120} step={5} />
 			<RangeInput name="Break Lap Time" bind:inputTime={breakTimeInMinutes} maxTime={30} step={1} />
-			{#if showWorkTimer}
+			{#if currentTimer === 'work'}
 				<Timer
 					name="Work Timer"
 					initialTimeInSeconds={workTimeInMinutes * 60}
