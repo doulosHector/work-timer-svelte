@@ -89,6 +89,7 @@
 					timeElapsedInSeconds={workTimeElapsedInSeconds}
 				/>
 				<EstimatedEndTime
+					{currentTimer}
 					{breakTimeInMinutes}
 					{workTimeInMinutes}
 					{workTimeElapsedInSeconds}
