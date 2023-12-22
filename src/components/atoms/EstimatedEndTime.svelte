@@ -26,7 +26,7 @@
 			targetLeftInMinutes = targetLeftInSeconds > 0 ? targetLeftInSeconds / 60 : 0;
 
 			breaksLeft = workTimeInMinutes > 0 ? Math.round(targetLeftInMinutes / workTimeInMinutes) : 0;
-			breaksLeft -= currentTimer === 'work' ? 1 : 0;
+			breaksLeft -= currentTimer === 'break' ? 1 : 0;
 			breakTimeLeftInMinutes = breaksLeft * breakTimeInMinutes;
 
 			totalTimeLeftInMinutes = Math.round(targetLeftInMinutes + breakTimeLeftInMinutes + foodHour);
