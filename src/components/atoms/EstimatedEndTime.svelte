@@ -1,7 +1,6 @@
 <script>
 	import dayjs from 'dayjs';
 
-	export let currentTimer;
 	export let targetTimeInSeconds;
 	export let workTimeElapsedInSeconds;
 	export let breakTimeInMinutes;
@@ -21,12 +20,11 @@
 		// This reasign estimatedEndTime when currentTimer
 		// or foodHour changes to have the most accurate
 		// estimatedEndTime
-		if (currentTimer || foodHour) {
+		if (workTimeElapsedInSeconds || foodHour) {
 			targetLeftInSeconds = targetTimeInSeconds - workTimeElapsedInSeconds;
 			targetLeftInMinutes = targetLeftInSeconds > 0 ? targetLeftInSeconds / 60 : 0;
 
 			breaksLeft = workTimeInMinutes > 0 ? Math.round(targetLeftInMinutes / workTimeInMinutes) : 0;
-			breaksLeft -= currentTimer === 'break' ? 1 : 0;
 			breakTimeLeftInMinutes = breaksLeft * breakTimeInMinutes;
 
 			totalTimeLeftInMinutes = Math.round(targetLeftInMinutes + breakTimeLeftInMinutes + foodHour);
